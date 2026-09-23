@@ -14,14 +14,17 @@ interface Props {
   bright?: boolean;
 }
 const { image, alt, crumb, lede, cta, note, position = 'center', bright = false } = Astro.props;
+// Nunca generar anchos mayores que el original, pero siempre incluir el original a tamaño completo
+const widths = [...new Set([768, 1280, 1920, image.width].filter((w) => w <= image.width))];
 ---
 
 <section class="relative flex min-h-[92svh] items-end overflow-hidden bg-espresso text-bone">
   <Image
     src={image}
     alt={alt}
-    widths={[768, 1280, 1920]}
+    widths={widths}
     sizes="100vw"
+    quality={90}
     loading="eager"
     fetchpriority="high"
     class="hero-img absolute inset-0 size-full object-cover"

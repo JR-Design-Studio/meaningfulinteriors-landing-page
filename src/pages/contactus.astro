@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { site } from '../data/site';
 import flatlay from '../assets/img/material-flatlay.webp';
+import heroContact from '../assets/img/hero-contact.webp';
 
 const fit = [
   'Looking for full-service interior design or luxury closet design',
@@ -26,9 +27,10 @@ const label =
   <section class="grid min-h-dvh lg:grid-cols-2">
     <div class="relative min-h-[60svh] lg:sticky lg:top-0 lg:h-dvh">
       <Image
-        src={flatlay}
-        alt="Calm material flat lay with stone, linen, plaster, and dried magnolia"
-        widths={[736]}
+        src={heroContact}
+        alt="Calm material flat lay with stone, plaster, textured linen, and white magnolia blossoms"
+        widths={[768, 1280, heroContact.width]}
+        quality={90}
         sizes="(min-width: 1024px) 50vw, 100vw"
         loading="eager"
         class="absolute inset-0 size-full object-cover"
