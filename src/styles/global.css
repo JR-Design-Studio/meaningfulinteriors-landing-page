@@ -70,7 +70,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .js [data-curtain] {
     clip-path: inset(0 0 100% 0);
-    transition: clip-path 1.4s var(--ease-calm);
+    transition: clip-path 1.1s var(--ease-calm);
   }
   .js [data-curtain].is-in {
     clip-path: inset(0 0 0 0);
@@ -86,5 +86,27 @@
   .js [data-rise].is-in {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Fotos: aparecen suavemente cuando ya cargaron y están a la vista, en vez de "saltar".
+   Se usan opacity/filter/translate (no transform ni scale) para no pisar los zooms al pasar el cursor. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Las fotos dentro de una cortina ya tienen su propio efecto: no se les suma otro */
+  .js main img:not([data-shown]):not([data-curtain] img) {
+    opacity: 0;
+    filter: blur(6px);
+    translate: 0 10px;
+  }
+  .js main img:not([data-curtain] img) {
+    transition:
+      opacity 0.8s var(--ease-calm),
+      filter 0.8s var(--ease-calm),
+      translate 0.9s var(--ease-calm);
+  }
+  /* La foto de portada no se desplaza: solo aparece, y conserva su acercamiento lento */
+  .js main img.hero-img:not([data-shown]) {
+    filter: none;
+    translate: none;
   }
 }

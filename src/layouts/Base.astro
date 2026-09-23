@@ -80,17 +80,47 @@ const schema = [
     <Footer />
 
     <script>
+      // Ejecuta fn cuando la foto ya cargó (o de inmediato si ya estaba lista)
+      const whenLoaded = (img: HTMLImageElement | null, fn: () => void) => {
+        if (!img || (img.complete && img.naturalWidth)) return fn();
+        img.addEventListener('load', fn, { once: true });
+        img.addEventListener('error', fn, { once: true });
+      };
+
       const io = new IntersectionObserver(
         (entries) => {
           for (const e of entries) {
             if (!e.isIntersecting) continue;
-            e.target.classList.add('is-in');
-            io.unobserve(e.target);
+            const el = e.target as HTMLElement;
+            if (el.hasAttribute('data-curtain')) {
+              // La cortina se abre cuando su foto ya está lista, nunca sobre un hueco vacío.
+              // Una foto "lazy" recortada del todo nunca empezaría a descargarse: se fuerza la carga,
+              // y si algo falla la cortina se abre igual a los 1.5 s.
+              const img = el.querySelector('img');
+              if (img) img.loading = 'eager';
+              const open = () => el.classList.add('is-in');
+              whenLoaded(img, open);
+              setTimeout(open, 1500);
+            } else el.classList.add('is-in');
+            io.unobserve(el);
           }
         },
         { rootMargin: '0px 0px -40px 0px' },
       );
       document.querySelectorAll('[data-curtain], [data-rise]').forEach((el) => io.observe(el));
+
+      // Fotos sin cortina: aparecen en cuanto están a la vista y terminaron de cargar
+      const imgObserver = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const img = e.target as HTMLImageElement;
+          whenLoaded(img, () => img.setAttribute('data-shown', ''));
+          imgObserver.unobserve(img);
+        }
+      });
+      document
+        .querySelectorAll<HTMLImageElement>('main img')
+        .forEach((img) => !img.closest('[data-curtain]') && imgObserver.observe(img));
     </script>
   </body>
 </html>
