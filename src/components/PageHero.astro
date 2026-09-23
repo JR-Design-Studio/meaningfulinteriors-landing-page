@@ -1,0 +1,106 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  /** Nombre de la página para la ruta "Home / …" sobre el título */
+  crumb?: string;
+  lede?: string;
+  cta?: { href: string; label: string };
+  note?: string;
+  position?: string;
+  /** Fotos claras (p. ej. clósets blancos): más sombra para que el menú y el título se lean */
+  bright?: boolean;
+}
+const { image, alt, crumb, lede, cta, note, position = 'center', bright = false } = Astro.props;
+---
+
+<section class="relative flex min-h-[92svh] items-end overflow-hidden bg-espresso text-bone">
+  <Image
+    src={image}
+    alt={alt}
+    widths={[768, 1280, 1920]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+    class="hero-img absolute inset-0 size-full object-cover"
+    style={`object-position:${position}`}
+  />
+  <!-- Sombra general: más densa abajo, donde vive el título -->
+  <div
+    class:list={[
+      'absolute inset-0 bg-gradient-to-t from-espresso/85',
+      bright ? 'via-espresso/50 to-espresso/35' : 'via-espresso/35 to-espresso/20',
+    ]}
+    aria-hidden="true"
+  >
+  </div>
+  <!-- Franja superior detrás del menú -->
+  <div
+    class:list={[
+      'absolute inset-x-0 top-0 h-48 bg-gradient-to-b to-transparent',
+      bright ? 'from-espresso/70' : 'from-espresso/50',
+    ]}
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto w-full max-w-[1520px] px-6 pt-32 pb-14 md:px-10 md:pb-20">
+    {
+      crumb && (
+        <nav aria-label="Breadcrumb" class="hero-in mb-6 text-[15px] text-bone/75">
+          <ol class="flex items-center gap-2">
+            <li><a href="/" class="underline-offset-4 hover:text-bone hover:underline">Home</a></li>
+            <li aria-hidden="true" class="text-bone/45">/</li>
+            <li aria-current="page" class="text-bone">{crumb}</li>
+          </ol>
+        </nav>
+      )
+    }
+    <h1 class="hero-in max-w-5xl font-display text-hero text-balance" style="--d:120ms"><slot /></h1>
+    <div class="hero-in mt-8 flex flex-col gap-8 md:flex-row md:items-end md:justify-between" style="--d:260ms">
+      {lede && <p class="max-w-xl text-lg text-bone/85 md:text-xl">{lede}</p>}
+      {
+        cta && (
+          <div class="shrink-0">
+            <a
+              href={cta.href}
+              class="inline-flex items-center gap-3 rounded-full bg-bone px-7 py-4 text-[15px] text-ink transition-colors hover:bg-linen"
+            >
+              {cta.label}
+              <span aria-hidden="true">→</span>
+            </a>
+            {note && <p class="mt-3 text-sm text-bone/70">{note}</p>}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-img {
+      animation: settle 2.4s var(--ease-calm) both;
+    }
+  }
+  /* El texto de portada entra al cargar, no al hacer scroll: siempre está a la vista */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-in {
+      animation: hero-rise 1.2s var(--ease-calm) both;
+      animation-delay: var(--d, 0ms);
+    }
+  }
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+  @keyframes settle {
+    from {
+      transform: scale(1.06);
+    }
+  }
+</style>

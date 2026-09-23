@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  title: string;
+  text?: string;
+  label?: string;
+  image: ImageMetadata;
+  alt: string;
+}
+const { title, text, label = 'Book a consultation', image, alt } = Astro.props;
+---
+
+<section class="px-6 pb-6 md:px-10 md:pb-10">
+  <div class="mx-auto grid max-w-[1520px] overflow-hidden bg-linen md:grid-cols-2">
+    <div class="flex flex-col justify-center px-8 py-16 md:px-14 md:py-24" data-rise>
+      <h2 class="font-display text-title text-balance">{title}</h2>
+      {text && <p class="mt-6 max-w-md text-lg text-stone">{text}</p>}
+      <a
+        href="/contactus"
+        class="mt-10 inline-flex w-fit items-center gap-3 rounded-full bg-ink px-7 py-4 text-[15px] text-bone transition-colors hover:bg-espresso"
+      >
+        {label}
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+    <div class="relative min-h-80" data-curtain>
+      <Image src={image} alt={alt} widths={[640, 960, 1280]} sizes="(min-width: 768px) 50vw, 100vw" class="absolute inset-0 size-full object-cover" />
+    </div>
+  </div>
+</section>

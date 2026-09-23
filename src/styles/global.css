@@ -1,0 +1,90 @@
+@import "tailwindcss";
+@import "@fontsource/dm-serif-text/400.css";
+@import "@fontsource/dm-serif-text/400-italic.css";
+@import "@fontsource-variable/arimo";
+@import "@fontsource-variable/arimo/wght-italic.css";
+
+@theme {
+  /* Paleta tomada de los propios renders: piedra, lino, madera oscura y latón */
+  --color-bone: #f3efe8;
+  --color-linen: #e7e0d5;
+  --color-sand: #d8cebf;
+  --color-ink: #1f1b17;
+  --color-stone: #6d655b;
+  --color-espresso: #2a241f;
+  --color-brass: #a4865a;
+  --color-sage: #6f7c68;
+
+  --font-serif: "DM Serif Text", Georgia, serif;
+  --font-sans: "Arimo Variable", Arial, ui-sans-serif, system-ui, sans-serif;
+
+  --ease-calm: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: clip;
+  }
+  body {
+    @apply bg-bone text-ink font-sans antialiased;
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-espresso);
+    color: var(--color-bone);
+  }
+  :focus-visible {
+    outline: 1.5px solid var(--color-brass);
+    outline-offset: 4px;
+  }
+}
+
+/* DM Serif Text solo existe en peso 400: nunca dejar que el navegador la engrose */
+@utility font-display {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-synthesis: none;
+}
+@utility text-hero {
+  font-size: clamp(2.6rem, 5.6vw, 5.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.07em;
+  word-spacing: 0.1em;
+}
+@utility text-title {
+  font-size: clamp(2rem, 3.6vw, 3.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.07em;
+  word-spacing: 0.1em;
+}
+@utility text-subtitle {
+  font-size: clamp(1.45rem, 2.2vw, 2.1rem);
+  line-height: 1.2;
+}
+
+/* Revelado tipo cortina para las fotos; sin JS o con movimiento reducido se ve todo */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-curtain] {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.4s var(--ease-calm);
+  }
+  .js [data-curtain].is-in {
+    clip-path: inset(0 0 0 0);
+  }
+  .js [data-rise] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 1.1s var(--ease-calm),
+      transform 1.1s var(--ease-calm);
+    transition-delay: var(--d, 0ms);
+  }
+  .js [data-rise].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}

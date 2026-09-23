@@ -1,0 +1,263 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Steps from '../components/Steps.astro';
+import Faq from '../components/Faq.astro';
+import Cta from '../components/Cta.astro';
+import { faqPage, service } from '../lib/seo';
+import { site } from '../data/site';
+import { roman } from '../lib/roman';
+
+import walkIn from '../assets/img/closet-walk-in.webp';
+import symmetrical from '../assets/img/closet-symmetrical.webp';
+import materialSelection from '../assets/img/gabriela-material-selection.webp';
+import darkWood from '../assets/img/closet-dark-wood.webp';
+
+const quotes = [
+  'I can’t find anything.',
+  'I don’t know how to organize it.',
+  'Getting dressed stresses me out.',
+  'I feel overwhelmed every morning.',
+];
+
+const designedTo = [
+  'reduce cognitive overload',
+  'support decision-making',
+  'create emotional calm',
+  'make routines feel effortless',
+];
+
+const changes = [
+  'You see everything clearly',
+  'You know where things belong',
+  'You stop overthinking outfits',
+  'Your mornings feel lighter',
+  'Your space supports you instead of draining you',
+];
+
+const steps = [
+  {
+    title: 'Discovery Call (20 minutes)',
+    text: 'We talk about what feels overwhelming, what isn’t working, and how you want to feel in your space.',
+  },
+  { title: 'Neurodesign Strategy', text: 'I analyze layout, flow, categories, visibility, and stress points.' },
+  {
+    title: 'Design Direction',
+    text: 'You receive a clear plan for a closet that supports your daily life and nervous system.',
+  },
+  {
+    title: 'Material & Sensory Selection',
+    text: 'Finishes, textures, lighting, and color palettes are selected to promote calm, clarity, and ease.',
+  },
+  {
+    title: 'Functional Zoning & Organization',
+    text: 'Designed around real routines: dressing flow, frequency of use, visual rest, and intuitive organization.',
+  },
+  {
+    title: 'Implementation Guidance',
+    text: 'Whether you work with a contractor, millworker, or organizer, I guide the next steps so the design is executed as intended.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'What is neurodesign closet design?',
+    a: 'Neurodesign closet design is an approach that applies principles of neuroscience to create spaces that reduce visual stress, support mental clarity, and improve daily routines. In a closet, this means thoughtful layout, calming materials, and lighting that helps you start and end your day with ease rather than overwhelm.',
+  },
+  {
+    q: 'How is a neurodesign closet different from a traditional custom closet?',
+    a: 'A traditional custom closet focuses primarily on storage and aesthetics, while a neurodesign closet is designed around how your brain processes space. The goal is not just organization, but creating a calm, intuitive environment that supports emotional well-being and daily flow.',
+  },
+  {
+    q: 'Who is neurodesign closet design ideal for?',
+    a: 'Neurodesign closets are ideal for clients who value both luxury and well-being. This approach is especially beneficial for individuals who feel overwhelmed by clutter, have busy lifestyles, or want their home to actively support clarity, focus, and calm.',
+  },
+  {
+    q: 'Do you design luxury walk-in closets in Los Angeles?',
+    a: 'Yes. Meaningful Interiors specializes in luxury walk-in closet design in Los Angeles and Southern California, creating custom spaces tailored to each client’s lifestyle, wardrobe, and daily habits, with a strong focus on elegance, functionality, and emotional comfort. Select projects are also offered virtually when appropriate.',
+  },
+  {
+    q: 'What is included in your closet design process?',
+    a: 'Each project includes a personalized design strategy, space planning, material and finish selection, lighting guidance, and a cohesive aesthetic aligned with your home. The process is collaborative, intentional, and designed to feel seamless from concept to completion.',
+  },
+  {
+    q: 'How long does a custom neurodesign closet project take?',
+    a: 'Timelines vary depending on the scope of the project, but most custom neurodesign closet designs move from concept to installation within several weeks. The process prioritizes quality, thoughtful planning, and long-term satisfaction rather than speed alone.',
+  },
+  {
+    q: 'How do I get started with a neurodesign closet project?',
+    a: 'The first step is a private design consultation to understand your space, needs, and lifestyle. From there, a tailored design direction is created to ensure your closet supports both functionality and well-being.',
+  },
+];
+---
+
+<Base
+  title="Neurodesign Closet Designer | Los Angeles Luxury Closets | Meaningful Interiors"
+  description="Luxury closet design in Los Angeles guided by neurodesign: layouts, lighting, and organization that reduce daily stress and help your mornings feel calm and clear."
+  image={walkIn}
+  crumbs={[{ name: 'Closet Design', path: '/neurodesign-closet-design-los-angeles' }]}
+  jsonLd={[
+    service(
+      'Neurodesign Closet Design',
+      'Luxury walk-in closet design in Los Angeles guided by neurodesign principles to reduce stress and support daily routines.',
+      '/neurodesign-closet-design-los-angeles',
+    ),
+    faqPage(faqs),
+  ]}
+>
+  <PageHero
+    image={walkIn}
+    bright
+    alt="Luxury walk-in closet with backlit shelving, crystal chandelier, and a central ottoman"
+    crumb="Closet Design"
+    lede="Luxury closet design that reduces daily stress and helps your brain feel organized, focused, and at peace."
+    cta={{ href: '/contactus', label: 'Book a 20-Minute Discovery Call' }}
+    note="Begin with a calm, no-pressure conversation."
+  >
+    Closets designed for <em>calm</em>, clarity, and daily ease.
+  </PageHero>
+
+  <!-- The problem -->
+  <section class="px-6 py-28 md:px-10 md:py-40">
+    <div class="mx-auto grid max-w-[1520px] gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-9 lg:col-start-4">
+        <p class="font-display text-subtitle md:text-[clamp(1.75rem,2.7vw,2.6rem)] md:leading-[1.18]" data-rise>
+          If your closet feels overwhelming, chaotic, or stressful, it’s not a discipline problem; it’s a
+          <em>design</em> problem.
+        </p>
+        <p class="mt-10 max-w-2xl text-lg text-stone" data-rise>
+          I design closets using neurodesign principles so your space works with your brain, not against it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why it feels stressful -->
+  <section class="bg-linen px-6 py-28 md:px-10 md:py-36">
+    <div class="mx-auto max-w-[1520px]">
+      <h2 class="max-w-3xl font-display text-title text-balance" data-rise>
+        Why your closet feels stressful, even when it’s “nice.”
+      </h2>
+      <ul class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          quotes.map((q, i) => (
+            <li class="bg-bone p-8" data-rise style={`--d:${i * 80}ms`}>
+              <p class="font-display text-2xl italic leading-snug">“{q}”</p>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-14 max-w-3xl text-lg text-stone" data-rise>
+        Most closets are designed for storage, not for how the brain actually functions. When your closet creates visual
+        noise, poor flow, or decision fatigue, your nervous system stays in a low-grade stress state every single day.
+      </p>
+    </div>
+  </section>
+
+  <!-- Neurodesign in closets -->
+  <section class="px-6 py-28 md:px-10 md:py-40">
+    <div class="mx-auto grid max-w-[1520px] items-center gap-14 lg:grid-cols-12 lg:gap-20">
+      <div class="lg:col-span-7" data-curtain>
+        <Image
+          src={symmetrical}
+          alt="Symmetrical luxury closet with marble island, crystal chandelier, and warm backlit shelving"
+          widths={[768, 1280, 1536]}
+          sizes="(min-width: 1024px) 55vw, 100vw"
+          class="aspect-[3/2] w-full object-cover"
+        />
+      </div>
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-title" data-rise>What is neurodesign in closet design?</h2>
+        <p class="mt-8 text-lg" data-rise>
+          Neurodesign applies neuroscience and psychology to interior design. By combining behavioral science and
+          spatial psychology, it reduces mental overload and turns daily routines into something effortless.
+        </p>
+        <p class="mt-6 text-stone" data-rise>In closets, it means layouts, zones, lighting, and organization systems that:</p>
+        <ul class="mt-5 grid grid-cols-2 gap-x-6 gap-y-3">
+          {designedTo.map((d) => <li class="font-display text-xl italic" data-rise>{d}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- What changes -->
+  <section class="px-6 pb-28 md:px-10 md:pb-40">
+    <div class="mx-auto grid max-w-[1520px] items-center gap-14 lg:grid-cols-12 lg:gap-20">
+      <div class="order-2 lg:order-1 lg:col-span-6">
+        <h2 class="font-display text-title text-balance" data-rise>What changes when your closet is designed for your brain.</h2>
+        <ol class="mt-12 space-y-6">
+          {
+            changes.map((c, i) => (
+              <li class="flex items-baseline gap-6 border-b border-ink/10 pb-6 font-display text-2xl" data-rise style={`--d:${i * 70}ms`}>
+                <span class="w-10 shrink-0 text-lg italic text-brass">{roman(i)}.</span>
+                {c}
+              </li>
+            ))
+          }
+        </ol>
+        <p class="mt-10 text-lg text-stone" data-rise>
+          This is not about perfection. It’s about clarity, ease, and emotional support.
+        </p>
+      </div>
+      <figure class="order-1 lg:order-2 lg:col-span-5 lg:col-start-8" data-curtain>
+        <Image
+          src={materialSelection}
+          alt="Gabriela Brum reviewing material samples for a closet design"
+          widths={[438]}
+          class="aspect-[2/3] w-full object-cover"
+        />
+        <figcaption class="mt-4 text-sm text-stone">Material and finish selection with Gabriela Brum.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="bg-espresso px-6 py-28 text-bone md:px-10 md:py-40">
+    <div class="mx-auto max-w-[1520px]">
+      <div class="grid gap-10 lg:grid-cols-12">
+        <div class="lg:col-span-5">
+          <h2 class="font-display text-title" data-rise>Every decision is designed to reduce mental load.</h2>
+        </div>
+      </div>
+      <div class="mt-20"><Steps steps={steps} tone="light" /></div>
+      <a
+        href="/contactus"
+        class="mt-20 inline-flex items-center gap-3 rounded-full bg-bone px-7 py-4 text-[15px] text-ink transition-colors hover:bg-linen"
+        data-rise
+      >
+        Book a 20-Minute Discovery Call <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="px-6 py-28 md:px-10 md:py-40">
+    <div class="mx-auto grid max-w-[1520px] gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <h2 class="font-display text-title" data-rise>Neurodesign closet design FAQs.</h2>
+        <p class="mt-8 max-w-sm text-sm text-stone" data-rise>
+          Written by Gabriela Brum, neurodesign interior designer and founder of Meaningful Interiors, with over a decade
+          of experience in high-end residential interiors.
+        </p>
+      </div>
+      <div class="lg:col-span-8"><Faq items={faqs} /></div>
+    </div>
+  </section>
+
+  <!-- Areas -->
+  <section class="px-6 pb-28 md:px-10 md:pb-36">
+    <div class="mx-auto max-w-[1520px] border-t border-ink/10 pt-12">
+      <p class="font-display text-lg italic text-stone">Serving clients in</p>
+      <p class="mt-4 max-w-5xl font-display text-2xl leading-relaxed md:text-3xl">{site.serviceAreas.join(' · ')}</p>
+    </div>
+  </section>
+
+  <Cta
+    title="Ready to feel good in your space again?"
+    text="Your closet should support you, not stress you out."
+    label="Book a 20-Minute Discovery Call"
+    image={darkWood}
+    alt="Dark wood closet with LED-lit shelving and a central island"
+  />
+</Base>

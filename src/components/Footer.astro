@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import { nav, site } from '../data/site';
+import lockup from '../assets/img/logo-lockup-light.png';
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-espresso text-bone">
+  <div class="mx-auto max-w-[1520px] px-6 pt-24 pb-10 md:px-10">
+    <Image src={lockup} alt="Meaningful Interiors" height={160} class="mb-16 h-20 w-auto" />
+    <p class="max-w-4xl font-display text-title text-balance">
+      We design spaces to support how you <em>live</em>, <em>feel</em>, and <em>move</em> through life.
+    </p>
+
+    <div class="mt-20 grid gap-12 text-[15px] sm:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <p class="font-display text-lg italic text-bone/60">Studio</p>
+        <p class="mt-4 text-bone/85">Meaningful Interiors<br />{site.city}</p>
+        <a href={`mailto:${site.email}`} class="mt-4 block break-all text-bone/85 underline-offset-4 hover:underline"
+          >{site.email}</a
+        >
+      </div>
+      <div>
+        <p class="font-display text-lg italic text-bone/60">Pages</p>
+        <ul class="mt-4 space-y-2">
+          {
+            nav.map((n) => (
+              <li>
+                <a href={n.href} class="text-bone/85 underline-offset-4 hover:underline">
+                  {n.label === 'Interior Design' ? 'Interior Design Services' : n.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div>
+        <p class="font-display text-lg italic text-bone/60">Serving</p>
+        <p class="mt-4 text-bone/85">{site.serviceAreas.join(' · ')}</p>
+      </div>
+      <div>
+        <p class="font-display text-lg italic text-bone/60">Follow</p>
+        <ul class="mt-4 flex gap-3">
+          <li>
+            <a
+              href={site.instagram}
+              target="_blank"
+              rel="noopener"
+              aria-label="Meaningful Interiors on Instagram"
+              title="Instagram"
+              class="grid size-12 place-items-center rounded-full border border-bone/25 text-bone/85 transition-colors hover:border-bone hover:bg-bone hover:text-espresso"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4.2" />
+                <circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              href={site.facebook}
+              target="_blank"
+              rel="noopener"
+              aria-label="Meaningful Interiors on Facebook"
+              title="Facebook"
+              class="grid size-12 place-items-center rounded-full border border-bone/25 text-bone/85 transition-colors hover:border-bone hover:bg-bone hover:text-espresso"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M13.4 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.5-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.8v3h2.6V21h3Z" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-24 flex flex-col justify-between gap-2 text-[13px] text-bone/50 sm:flex-row">
+      <p>© {year} Meaningful Interiors. Neurodesign interior design in Los Angeles.</p>
+      <a href="#main" class="hover:text-bone">Back to top ↑</a>
+    </div>
+  </div>
+</footer>

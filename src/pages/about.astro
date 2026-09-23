@@ -1,0 +1,170 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Cta from '../components/Cta.astro';
+import { absolute, businessRef } from '../lib/seo';
+import { site } from '../data/site';
+import { roman } from '../lib/roman';
+
+import dining from '../assets/img/dining-room.webp';
+import portrait from '../assets/img/gabriela-portrait.webp';
+import samples from '../assets/img/gabriela-samples.webp';
+import kitchenBrass from '../assets/img/kitchen-brass-pendants.jpg';
+
+const different = [
+  'Reduce stress and cognitive overload',
+  'Improve flow and daily functionality',
+  'Create a sense of emotional grounding and clarity',
+  'Feel luxurious without feeling overwhelmed',
+];
+
+const focus = [
+  'Lifestyle analysis and spatial behavior',
+  'Functional planning with emotional impact',
+  'Curated materials and finishes that support calm',
+  'Clear communication and structured project management',
+];
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.founder,
+  jobTitle: 'Neurodesign Interior Designer',
+  worksFor: businessRef,
+  url: absolute('/about'),
+  address: { '@type': 'PostalAddress', addressLocality: 'Los Angeles', addressRegion: 'CA', addressCountry: 'US' },
+  sameAs: [site.instagram],
+};
+---
+
+<Base
+  title="About Gabriela Brum | Neurodesign Interior Designer in Los Angeles | Meaningful Interiors"
+  description="Meaningful Interiors was founded by Gabriela Brum, a Los Angeles interior designer specializing in neurodesign-driven residential interiors that feel calm, intentional, and deeply personal."
+  image={portrait}
+  imageAlt="Gabriela Brum, founder of Meaningful Interiors"
+  crumbs={[{ name: 'About', path: '/about' }]}
+  jsonLd={[person]}
+>
+  <PageHero
+    image={dining}
+    alt="Dining room with a marble table, ochre velvet chairs, and a sculptural ring chandelier"
+    crumb="About"
+    lede="Interior design is not just about how a space looks; it’s about how it supports your nervous system, your routines, and your emotional well-being."
+    position="center 60%"
+  >
+    Neurodesign interior designer in <em>Los Angeles</em>.
+  </PageHero>
+
+  <!-- Founder -->
+  <section class="px-6 py-28 md:px-10 md:py-40">
+    <div class="mx-auto grid max-w-[1520px] gap-14 lg:grid-cols-12 lg:gap-20">
+      <div class="lg:col-span-5">
+        <div data-curtain>
+          <Image
+            src={portrait}
+            alt="Gabriela Brum seated in a blue velvet peacock chair"
+            widths={[480, 828]}
+            sizes="(min-width: 1024px) 38vw, 100vw"
+            class="aspect-square w-full object-cover"
+          />
+        </div>
+        <p class="mt-4 text-sm text-stone">Gabriela Brum, founder.</p>
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7 lg:pt-10">
+        <h2 class="font-display text-title text-balance" data-rise>
+          Meaningful Interiors was founded by Gabriela Brum.
+        </h2>
+        <div class="mt-10 space-y-6 text-lg">
+          <p data-rise>
+            A Los Angeles-based interior designer specializing in neurodesign-driven residential interiors, with a
+            background in luxury interiors, procurement, and project coordination.
+          </p>
+          <p class="text-stone" data-rise>
+            Gabriela brings a rare balance of design intuition, strategic planning, and emotional intelligence to every
+            project. Her approach blends aesthetics with neuroscience principles to create spaces that reduce visual
+            noise, support mental clarity, and elevate daily life.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Different -->
+  <section class="bg-espresso px-6 py-28 text-bone md:px-10 md:py-40">
+    <div class="mx-auto grid max-w-[1520px] items-center gap-14 lg:grid-cols-12 lg:gap-20">
+      <div class="lg:col-span-6">
+        <h2 class="font-display text-title text-balance" data-rise>
+          An intentional focus on how spaces affect the brain and body.
+        </h2>
+        <p class="mt-10 text-lg text-bone/70" data-rise>Rather than following trends, we design environments that:</p>
+        <ul class="mt-6 space-y-4">
+          {
+            different.map((d, i) => (
+              <li class="flex gap-5 text-lg" data-rise style={`--d:${i * 70}ms`}>
+                <span class="mt-3.5 h-px w-6 shrink-0 bg-brass" aria-hidden="true" />
+                {d}
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-12 font-display text-2xl italic text-bone/85" data-rise>
+          Every decision, from layout to materials, lighting, and color, is made with purpose.
+        </p>
+      </div>
+      <div class="lg:col-span-5 lg:col-start-8" data-curtain>
+        <Image
+          src={samples}
+          alt="Gabriela Brum reviewing fabric and material samples"
+          widths={[480, 969]}
+          sizes="(min-width: 1024px) 38vw, 100vw"
+          class="aspect-[3/4] w-full object-cover object-top"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Process focus -->
+  <section class="px-6 py-28 md:px-10 md:py-40">
+    <div class="mx-auto grid max-w-[1520px] gap-14 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-title text-balance" data-rise>
+          A consultation designed to quiet the noise and understand how you live.
+        </h2>
+      </div>
+      <div class="lg:col-span-6 lg:col-start-7">
+        <ul class="grid gap-px bg-ink/10 sm:grid-cols-2">
+          {
+            focus.map((f, i) => (
+              <li class="bg-bone p-8" data-rise style={`--d:${(i % 2) * 90}ms`}>
+                <span class="font-display text-lg italic text-brass">{roman(i)}.</span>
+                <p class="mt-4 font-display text-xl leading-snug">{f}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-10 text-lg text-stone" data-rise>
+          This allows us to create interiors that are not only beautiful but deeply supportive and sustainable over time.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who -->
+  <section class="px-6 pb-28 md:px-10 md:pb-40">
+    <div class="mx-auto max-w-[1520px] border-t border-ink/10 pt-16">
+      <p class="max-w-5xl font-display text-subtitle md:text-[clamp(1.75rem,2.7vw,2.6rem)] md:leading-[1.2]" data-rise>
+        We work with homeowners, developers, and design-forward clients across Los Angeles who value intentional
+        luxury, clarity, and well-being, from full interiors to closets, kitchens, and living spaces.
+      </p>
+    </div>
+  </section>
+
+  <Cta
+    title="An interior designer who prioritizes how your space makes you feel."
+    text="Schedule a consultation and begin creating a space designed to support how you live, feel, and move through life."
+    label="Contact Meaningful Interiors"
+    image={kitchenBrass}
+    alt="Charcoal kitchen with brass-lined pendants and walnut stools"
+  />
+</Base>

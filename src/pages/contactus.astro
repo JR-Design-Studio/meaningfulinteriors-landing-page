@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+import flatlay from '../assets/img/material-flatlay.webp';
+
+const fit = [
+  'Looking for full-service interior design or luxury closet design',
+  'Based in Los Angeles or surrounding areas',
+  'Drawn to a calm, intentional, neurodesign-led approach',
+];
+
+const field =
+  'peer w-full border-0 border-b border-ink/25 bg-transparent px-0 pt-6 pb-3 text-lg outline-none transition-colors placeholder:text-transparent focus:border-ink';
+const label =
+  'pointer-events-none absolute top-6 left-0 text-lg text-stone transition-all duration-300 peer-focus:top-0 peer-focus:text-[13px] peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[13px]';
+---
+
+<Base
+  title="Contact Meaningful Interiors | Neurodesign Interior Designer Los Angeles"
+  description="Share a bit about your project and we’ll guide you through the next thoughtful step. Full-service interior design and luxury closet design in Los Angeles."
+  image={flatlay}
+  crumbs={[{ name: 'Contact', path: '/contactus' }]}
+  overlay={false}
+>
+  <section class="grid min-h-dvh lg:grid-cols-2">
+    <div class="relative min-h-[60svh] lg:sticky lg:top-0 lg:h-dvh">
+      <Image
+        src={flatlay}
+        alt="Calm material flat lay with stone, linen, plaster, and dried magnolia"
+        widths={[736]}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        loading="eager"
+        class="absolute inset-0 size-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-espresso/70 to-transparent" aria-hidden="true"></div>
+      <p class="absolute inset-x-6 bottom-10 max-w-md font-display text-3xl text-bone md:inset-x-10 md:text-4xl">
+        Let’s design a space that supports how you live, feel, and move through life.
+      </p>
+    </div>
+
+    <div class="px-6 pt-32 pb-24 md:px-14 lg:pt-40">
+      <h1 class="font-display text-title text-balance">
+        Share a bit about your project, and we’ll guide you through the next thoughtful step.
+      </h1>
+      <p class="mt-6 text-stone">Every inquiry is reviewed to ensure alignment and clarity.</p>
+
+      <div class="mt-12 bg-linen p-8">
+        <p class="font-display text-xl italic">This is a great fit if you’re:</p>
+        <ul class="mt-5 space-y-3">
+          {
+            fit.map((f) => (
+              <li class="flex gap-4">
+                <span class="mt-3 h-px w-5 shrink-0 bg-brass" aria-hidden="true" />
+                {f}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <form id="contact" class="mt-14 grid gap-x-8 gap-y-6 sm:grid-cols-2" data-email={site.email}>
+        <label class="relative block">
+          <input name="first" required autocomplete="given-name" placeholder="First name" class={field} />
+          <span class={label}>First name</span>
+        </label>
+        <label class="relative block">
+          <input name="last" required autocomplete="family-name" placeholder="Last name" class={field} />
+          <span class={label}>Last name</span>
+        </label>
+        <label class="relative block">
+          <input name="email" type="email" required autocomplete="email" placeholder="Email" class={field} />
+          <span class={label}>Email</span>
+        </label>
+        <label class="relative block">
+          <input name="phone" type="tel" required autocomplete="tel" placeholder="Phone" class={field} />
+          <span class={label}>Phone</span>
+        </label>
+        <label class="relative block sm:col-span-2">
+          <input name="subject" required placeholder="Subject" class={field} />
+          <span class={label}>Subject</span>
+        </label>
+        <label class="relative block sm:col-span-2">
+          <textarea name="project" required rows="5" placeholder="Project description" class={`${field} resize-none`}></textarea>
+          <span class={label}>Project description</span>
+        </label>
+        <div class="flex flex-col gap-4 pt-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+          <button
+            type="submit"
+            class="inline-flex w-fit items-center gap-3 rounded-full bg-ink px-8 py-4 text-[15px] text-bone transition-colors hover:bg-espresso"
+          >
+            Send inquiry <span aria-hidden="true">→</span>
+          </button>
+          <p class="text-sm text-stone">
+            Or write directly to <a href={`mailto:${site.email}`} class="text-ink underline underline-offset-4">{site.email}</a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.getElementById('contact') as HTMLFormElement;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const body = [
+      String(d.get('project')),
+      '',
+      `${d.get('first')} ${d.get('last')}`,
+      String(d.get('email')),
+      String(d.get('phone')),
+    ].join('\n');
+    location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(String(d.get('subject')))}&body=${encodeURIComponent(body)}`;
+  });
+</script>

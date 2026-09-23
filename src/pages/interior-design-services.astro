@@ -1,0 +1,229 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Steps from '../components/Steps.astro';
+import Cta from '../components/Cta.astro';
+import { service } from '../lib/seo';
+
+import livingSage from '../assets/img/living-sage.png';
+import palette from '../assets/img/material-palette.jpg';
+import kitchenBoard from '../assets/img/kitchen-concept-board.png';
+import boardBedroom from '../assets/img/board-bedroom.png';
+import boardPlan from '../assets/img/board-bedroom-plan.png';
+import edesignLiving from '../assets/img/edesign-living.png';
+import boardMaterials from '../assets/img/board-materials.jpg';
+import dining from '../assets/img/dining-room.webp';
+
+const included = [
+  'Concept development & spatial planning',
+  'Neurodesign-based layout strategy',
+  'Furniture, lighting & finish selections',
+  'Material palette & color psychology',
+  'Procurement coordination & trade sourcing',
+  'Design guidance through implementation',
+];
+
+const idealFor = [
+  'Value thoughtful, intentional design',
+  'Want a cohesive, elevated interior',
+  'Are ready to invest in professional guidance',
+  'Seek calm, organized, and functional spaces',
+];
+const notFor = [
+  'You’re looking for quick styling only',
+  'You prefer DIY or piecemeal decisions',
+  'Budget is the primary driver over quality',
+];
+
+const steps = [
+  { title: 'Consultation & Alignment', text: 'We define goals, lifestyle needs, and scope.' },
+  { title: 'Design Strategy & Concept', text: 'Layouts, materials, and design direction grounded in neurodesign.' },
+  { title: 'Selections & Planning', text: 'Furniture, lighting, finishes, and sourcing.' },
+  { title: 'Execution Support', text: 'Guidance through implementation for a seamless experience.' },
+];
+
+const boards = [
+  { image: boardBedroom, alt: 'Bedroom design board with bed, lighting, and accent chair selections' },
+  { image: boardPlan, alt: 'Bedroom layout plan with furniture placement' },
+  { image: edesignLiving, alt: 'Living room design board with a blue sofa and art selections' },
+  { image: boardMaterials, alt: 'Material sample board in stone, wood, and plaster tones' },
+];
+---
+
+<Base
+  title="Luxury Interior Design Services in Los Angeles | Neurodesign Interiors"
+  description="Full-service interior design in Los Angeles guided by neurodesign: concept, spatial planning, selections, sourcing, and guidance through implementation."
+  image={livingSage}
+  crumbs={[{ name: 'Interior Design Services', path: '/interior-design-services' }]}
+  jsonLd={[
+    service(
+      'Full-Service Interior Design',
+      'Full-service interior design guided by neurodesign principles, from concept and spatial planning to selections, sourcing, and implementation.',
+      '/interior-design-services',
+    ),
+  ]}
+>
+  <PageHero
+    image={livingSage}
+    bright
+    alt="Living room with a sage green sofa, sculptural pendant, and warm wood walls"
+    crumb="Interior Design Services"
+    lede="Spaces designed to support how you live, feel, and move through life with intention, clarity, and calm."
+    cta={{ href: '/contactus', label: 'Book a Consultation' }}
+  >
+    Luxury interior design services rooted in <em>neurodesign</em>.
+  </PageHero>
+
+  <!-- Statement -->
+  <section class="px-6 py-28 md:px-10 md:py-40">
+    <div class="mx-auto grid max-w-[1520px] gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-9 lg:col-start-4">
+        <p class="font-display text-subtitle md:text-[clamp(1.75rem,2.7vw,2.6rem)] md:leading-[1.18]" data-rise>
+          Meaningful Interiors offers full-service interior design guided by neurodesign principles, blending
+          aesthetics, functionality, and neuroscience to create environments that feel balanced, calm, and deeply
+          personal.
+        </p>
+        <p class="mt-12 font-display text-3xl italic text-stone md:text-4xl" data-rise style="--d:120ms">
+          This is not decoration. <span class="text-ink">This is intentional design</span> that supports your nervous
+          system and daily rituals.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Neurodesign -->
+  <section class="px-6 pb-28 md:px-10 md:pb-40">
+    <div class="mx-auto grid max-w-[1520px] items-center gap-14 lg:grid-cols-12 lg:gap-20">
+      <figure class="lg:col-span-5" data-curtain>
+        <Image
+          src={palette}
+          alt="Material palette with marble, walnut, brass, and navy lacquer"
+          widths={[480, 736]}
+          sizes="(min-width: 1024px) 38vw, 100vw"
+          class="aspect-square w-full object-cover"
+        />
+        <figcaption class="mt-4 text-sm text-stone">Marble, walnut, brass, and soft neutral finishes.</figcaption>
+      </figure>
+      <div class="lg:col-span-6 lg:col-start-7">
+        <h2 class="font-display text-title text-balance" data-rise>What is neurodesign interior design?</h2>
+        <p class="mt-8 text-lg" data-rise>
+          Neurodesign applies insights from neuroscience to interior design, focusing on how spaces affect mood, stress
+          levels, focus, and overall well-being.
+        </p>
+        <p class="mt-5 text-lg text-stone" data-rise>
+          Through thoughtful layouts, material selection, lighting, and spatial flow, interiors are designed to feel
+          supportive rather than overwhelming.
+        </p>
+        <p class="mt-10 font-display text-2xl italic" data-rise>
+          The result: spaces that don’t just look beautiful, but feel right.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Included -->
+  <section class="bg-linen px-6 py-28 md:px-10 md:py-36">
+    <div class="mx-auto grid max-w-[1520px] gap-14 lg:grid-cols-12 lg:gap-20">
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-title text-balance" data-rise>Everything a cohesive home needs, in one process.</h2>
+        <p class="mt-8 max-w-md text-stone" data-rise>
+          Each project is approached holistically, considering how every element works together to support your
+          lifestyle.
+        </p>
+        <div class="mt-12 hidden lg:block" data-curtain>
+          <Image
+            src={kitchenBoard}
+            alt="Kitchen concept board with cabinetry, hardware, lighting, and flooring selections"
+            widths={[640, 960]}
+            sizes="38vw"
+            class="w-full"
+          />
+        </div>
+      </div>
+      <ul class="grid gap-px self-start bg-ink/10 sm:grid-cols-2 lg:col-span-7">
+        {
+          included.map((item, i) => (
+            <li class="bg-linen p-8 md:p-10" data-rise style={`--d:${(i % 2) * 90}ms`}>
+              <span class="font-display text-lg italic text-brass">{String(i + 1).padStart(2, '0')}</span>
+              <p class="mt-6 font-display text-2xl leading-snug">{item}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Fit -->
+  <section class="px-6 py-28 md:px-10 md:py-40">
+    <div class="mx-auto max-w-[1520px]">
+      <div class="grid gap-16 md:grid-cols-2 md:gap-20">
+        <div data-rise>
+          <h2 class="font-display text-subtitle">This service is ideal for clients who:</h2>
+          <ul class="mt-8 space-y-5 text-lg">
+            {
+              idealFor.map((t) => (
+                <li class="flex gap-5">
+                  <span class="mt-3.5 h-px w-6 shrink-0 bg-brass" aria-hidden="true" />
+                  {t}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div data-rise style="--d:120ms">
+          <h2 class="font-display text-subtitle text-stone">It may not be the right fit if:</h2>
+          <ul class="mt-8 space-y-5 text-lg text-stone">
+            {
+              notFor.map((t) => (
+                <li class="flex gap-5">
+                  <span class="mt-3.5 h-px w-6 shrink-0 bg-stone/40" aria-hidden="true" />
+                  {t}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="bg-espresso px-6 py-28 text-bone md:px-10 md:py-40">
+    <div class="mx-auto max-w-[1520px]">
+      <h2 class="mb-20 max-w-2xl font-display text-title" data-rise>Four steps, one clear direction.</h2>
+      <Steps steps={steps} tone="light" />
+    </div>
+  </section>
+
+  <!-- Boards -->
+  <section class="px-6 py-28 md:px-10 md:py-40">
+    <div class="mx-auto max-w-[1520px]">
+      <div class="grid gap-8 md:grid-cols-12">
+        <div class="md:col-span-4">
+          <h2 class="font-display text-title" data-rise>Design boards.</h2>
+          <p class="mt-6 max-w-sm text-stone" data-rise>
+            Layouts, materials, and selections are presented as clear boards, so every decision is visible before
+            anything is ordered.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 md:col-span-8 md:gap-6">
+          {
+            boards.map((b, i) => (
+              <div class:list={['overflow-hidden bg-linen', i % 2 === 1 && 'md:mt-16']} data-curtain>
+                <Image src={b.image} alt={b.alt} widths={[480, 900]} sizes="(min-width: 768px) 30vw, 50vw" class="aspect-[5/4] w-full object-cover" />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Cta
+    title="Ready to design a space that supports your life?"
+    label="Contact Meaningful Interiors"
+    image={dining}
+    alt="Dining room with a marble table and ochre velvet chairs"
+  />
+</Base>

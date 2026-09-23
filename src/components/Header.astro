@@ -1,0 +1,153 @@
+---
+import { Image } from 'astro:assets';
+import { nav, site } from '../data/site';
+import logoLight from '../assets/img/logo-horizontal-light.png';
+import logoDark from '../assets/img/logo-horizontal-dark.png';
+import markLight from '../assets/img/logo-mark-light.png';
+
+interface Props {
+  overlay?: boolean;
+}
+const { overlay = true } = Astro.props;
+const path = Astro.url.pathname.replace(/(index)?\.html$|\/$/, '') || '/';
+const current = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header
+  id="header"
+  data-overlay={overlay ? '' : undefined}
+  class="group/h fixed inset-x-0 top-0 z-50 text-ink transition-[background-color,color,box-shadow] duration-500 data-[overlay]:not-data-[solid]:text-bone data-[overlay]:not-data-[solid]:[text-shadow:0_1px_14px_rgb(20_16_12/0.35)] data-[solid]:bg-bone/92 data-[solid]:shadow-[0_1px_0_rgb(31_27_23/0.08)] data-[solid]:backdrop-blur-md"
+>
+  <div class="mx-auto flex h-20 max-w-[1520px] items-center justify-between gap-8 px-6 md:px-10">
+    <!-- Logo original (del favicon del sitio): versión clara sobre la foto, oscura con el encabezado sólido -->
+    <a href="/" class="relative block h-7 shrink-0 md:h-8" aria-label="Meaningful Interiors, home">
+      <Image
+        src={logoDark}
+        alt=""
+        height={64}
+        loading="eager"
+        class="h-full w-auto transition-opacity duration-500 group-data-[overlay]/h:group-not-data-[solid]/h:opacity-0"
+      />
+      <Image
+        src={logoLight}
+        alt=""
+        height={64}
+        loading="eager"
+        class="absolute inset-0 h-full w-auto opacity-0 transition-opacity duration-500 group-data-[overlay]/h:group-not-data-[solid]/h:opacity-100"
+      />
+    </a>
+
+    <nav class="hidden items-center gap-1 lg:flex" aria-label="Main">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={current(item.href) ? 'page' : undefined}
+            class="rounded-full px-4 py-2 text-[15px] opacity-80 transition-[background-color,opacity] duration-300 hover:bg-current/[0.07] hover:opacity-100 aria-[current=page]:bg-current/[0.12] aria-[current=page]:opacity-100"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a
+        href="/contactus"
+        class="hidden rounded-full border border-current/40 px-5 py-2.5 text-[14px] transition-colors hover:bg-current/10 sm:inline-block"
+      >
+        Book a consultation
+      </a>
+      <button
+        type="button"
+        data-menu-open
+        class="-mr-2 flex h-11 items-center gap-2 px-2 text-[15px] lg:hidden"
+        aria-expanded="false"
+        aria-controls="menu"
+      >
+        Menu
+        <svg width="22" height="10" viewBox="0 0 22 10" fill="none" aria-hidden="true"
+          ><path d="M1 1h20M7 9h14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"></path></svg
+        >
+      </button>
+    </div>
+  </div>
+</header>
+
+<div
+  id="menu"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu"
+  class="invisible fixed inset-0 z-[60] flex h-dvh flex-col bg-espresso text-bone opacity-0 transition-[opacity,visibility] duration-500 data-[open]:visible data-[open]:opacity-100 lg:hidden"
+>
+  <div class="flex h-20 shrink-0 items-center justify-between px-6">
+    <Image src={markLight} alt="Meaningful Interiors" height={56} class="h-7 w-auto" />
+    <button type="button" data-menu-close class="-mr-2 flex h-11 items-center gap-2 px-2 text-[15px]">
+      Close
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"
+        ><path d="M2 2l12 12M14 2 2 14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"></path></svg
+      >
+    </button>
+  </div>
+  <nav class="flex flex-1 flex-col justify-center gap-1 px-6" aria-label="Mobile">
+    {
+      nav.map((item, i) => (
+        <a
+          href={item.href}
+          aria-current={current(item.href) ? 'page' : undefined}
+          class="menu-item font-display text-[clamp(2.4rem,11vw,3.6rem)] leading-[1.15] text-bone/55 transition-colors hover:text-bone aria-[current=page]:text-bone aria-[current=page]:italic"
+          style={`--i:${i}`}
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+  <div class="shrink-0 space-y-1 px-6 pt-6 pb-[max(2rem,env(safe-area-inset-bottom))] text-[15px] text-bone/70">
+    <a href={`mailto:${site.email}`} class="block hover:text-bone">{site.email}</a>
+    <a href={site.instagram} target="_blank" rel="noopener" class="block hover:text-bone">Instagram</a>
+  </div>
+</div>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .menu-item {
+      opacity: 0;
+      transform: translateY(16px);
+      transition:
+        opacity 0.8s var(--ease-calm),
+        transform 0.8s var(--ease-calm),
+        color 0.3s;
+      transition-delay: calc(var(--i) * 60ms + 120ms), calc(var(--i) * 60ms + 120ms), 0ms;
+    }
+    #menu[data-open] .menu-item {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('header')!;
+  // Sin foto de portada detrás, el encabezado es sólido desde el inicio
+  const overlay = header.hasAttribute('data-overlay');
+  const onScroll = () => header.toggleAttribute('data-solid', !overlay || window.scrollY > 40);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const menu = document.getElementById('menu')!;
+  const open = document.querySelector<HTMLButtonElement>('[data-menu-open]')!;
+  const close = menu.querySelector<HTMLButtonElement>('[data-menu-close]')!;
+  const set = (on: boolean) => {
+    menu.toggleAttribute('data-open', on);
+    open.setAttribute('aria-expanded', String(on));
+    document.documentElement.style.overflow = on ? 'hidden' : '';
+    (on ? close : open).focus();
+  };
+  open.addEventListener('click', () => set(true));
+  close.addEventListener('click', () => set(false));
+  menu.addEventListener('click', (e) => (e.target as HTMLElement).closest('a') && set(false));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && menu.hasAttribute('data-open') && set(false));
+  matchMedia('(min-width: 1024px)').addEventListener('change', (e) => e.matches && set(false));
+</script>
